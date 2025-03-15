@@ -11,14 +11,14 @@ def prime_sum_range(start, end):
 
 
 
-
 def length_converter(value, direction): # function 2
-    if direction.upper() == 'M':
-        return round(value * 3.28084, 2)  # Meters to Feet
-    elif direction.upper() == 'F':
-        return round(value / 3.28084, 2)  # Feet to Meters
-    else:
-            raise ValueError("Wrong input. Use 'M' to convert meters to feet or 'F' to convert feet to meters.")
+        """convert the feet to meter or meter to the feet """
+        if direction.upper() == 'M':
+            return round(value * 3.28084, 2)  # Meters to Feet
+        elif direction.upper() == 'F':
+            return round(value / 3.28084, 2)  # Feet to Meters
+        else:
+                raise ValueError("Wrong input. Use 'M' to convert meters to feet or 'F' to convert feet to meters.")
 
 
 def consonant_counter(text): # function 3
@@ -27,7 +27,6 @@ def consonant_counter(text): # function 3
     return consonants
 
 def Maximum_Minimun_finder(numbers): # function 4
-  
     """Find the smallest and largest numbers from a list of numbers."""
     if not numbers:
         raise ValueError(" The number is not given.")
@@ -35,24 +34,17 @@ def Maximum_Minimun_finder(numbers): # function 4
 
 
 def palindrome(text): # function 5
-    """Check if a string is a palindrome, ignoring spaces and case."""
     cleaned_text = ''.join(char.lower() for char in text if char.isalnum())
     return cleaned_text == cleaned_text[::-1]
 
-def word_counter(Filename):# function 6
-
-    word_list = ["the", "was", "and"]
-    word_count = {word: 0 for word in word_list}
-
-    try:
-        with open(Filename, 'r', encoding='utf-8') as file:
-            text = file.read().lower()
-            for word in word_list:
-                word_count[word] = text.split().count(word)
-    except FileNotFoundError:
-        print("File not found.")
-        return None
-    return word_count
+import requests # function 6
+"""help to count the word present in the sentence"""
+def Word_count(text_file_url):
+    response = requests.get(text_file_url)
+    text = response.text.lower()
+    wlist = ['was', 'and', 'the']
+    word= {word: text.count(word) for word in wlist}
+    return word
 def main():
     while True:
         print("\nMenu: ")
@@ -65,6 +57,7 @@ def main():
         print("6. word counter")
         print("7. exit")
         select = input("Enter your number from (1-7): ")
+        """Displays a menu for various utilities and prompts user input."""
 
         if select == '1':
             start = int(input("Enter your starting number: "))
@@ -82,7 +75,6 @@ def main():
             text = input(" Enter your text: ")
             result = consonant_counter(text)
             print(f"Number of consonants in your text is: {result}")
-
         elif select == '4':
             numbers = list(map(int, input("Enter numbers separated by space: ").split()))
             smallest, largest = Maximum_Minimun_finder(numbers)
@@ -94,16 +86,17 @@ def main():
             print(f" The string of palindrome is {result}")
 
         elif select == '6':
-            filename = input("Enter ypur file to analyze: ")
-            result = word_counter(filename)
-            if result:
-                    for word, count in result.items():
-                        print(f"{word}: {count}") 
-
+            Your_Url = input(" Insert your text's URL: ").strip()
+            try:
+                result = Word_count(Your_Url)
+                print(f" Your word count is: {result}")
+            except requests.exceptions.RequestException as e:
+                print(f"invalid input, the error is detected: {e}")
+            
         elif select == '7':
             print("Exit the system.")
             break
-
+        
         else:
             print(" You have selceted the number which not in the option above.")
 
@@ -111,6 +104,15 @@ def main():
         if try_again != 'yes':
             print("Exiting the system.")
             break
-            
+        """Implements a menu-driven system offering various utilities like sum
+        of prime numbers within a range, length conversion from meters to feet
+         and vice versa, consonant counting from a text, finding the minimum and
+        maximum of a set of numbers, checking palindromes, and word counting from
+        a URL, while continuously asking for input from the user until the exit option
+        is selected and offering exception handling wherever necessary"""
+        
+        
 if __name__ == "__main__":
     main()
+   
+
