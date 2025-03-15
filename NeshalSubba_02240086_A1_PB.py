@@ -3,8 +3,8 @@ import random
 def Game_of_guessing_number():
     number_to_guess = random.randint(1, 100)
     user_attempts = 0
-    print("Welcome to the Game")
-    print("guess the number between 1 to 100.")
+    print("Hello, Please play the game")
+    print("Enter your lucky number number in the range of 1 to 100.")
     
     while True:
         try:
@@ -29,13 +29,13 @@ def rock_paper_scissors():
         print("Invalid choice! Please choose rock, paper, or scissors.")
         return
     
-    print(f"Computer chose: {computer_select}")
+    print(f"Computer chose: {cpu_select}")
     
-    if player_select == computer_select:
+    if player_select == cpu_select:
         print("It's a draw! Try again ")
-    elif (player_select == 'rock' and computer_select == 'scissors') or \
-         (player_select == 'paper' and computer_select == 'rock') or \
-         (player_select == 'scissors' and computer_select == 'paper'):
+    elif (player_select == 'rock' and cpu_select == 'scissors') or \
+         (player_select == 'paper' and cpu_select == 'rock') or \
+         (player_select == 'scissors' and cpu_select == 'paper'):
         print(" You win! You beat the computer")
     else:
         print("You lose! Computer beat you")
@@ -55,11 +55,16 @@ def main():
         elif select == '2':
             rock_paper_scissors()
        
-        elif select == '6':
+        elif select == '3':
             print("Exiting the program. Goodbye!")
             break
         else:
-            print("Invalid choice! Please select a number between 1 and 6.")
+            print("Invalid choice! Please select a number between 1 and 3.")
+            
+        try_again = input("\nWould you like to try another function? (yes/no): ").strip().lower()
+        if try_again != 'YES':
+            print("Exiting the system.")
+            break    
 
 if __name__ == "__main__":
     main()
